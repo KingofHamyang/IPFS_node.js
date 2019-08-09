@@ -23,15 +23,16 @@ app.get('/addfile', function(req, res) {
 
 })
 
-app.get('/getfile', function(req, res) {
+app.get('/getfile/:hash', function(req, res) {
     
     //This hash is returned hash of addFile router.
-    const validCID = 'HASH_CODE'
-
+    const validCID = req.params.hash.toString()
+    console.log(validCID)
     ipfs.files.get(validCID, function (err, files) {
         files.forEach((file) => {
           console.log(file.path)
           console.log(file.content.toString('utf8'))
+          res.send(file.content.toString('utf8'))
         })
       })
 
